@@ -127,14 +127,12 @@ class MetacoreEnrichmentController {
 	def loadScripts() {
 		List<Map> rows = []
 
-		for (String name in JS) {
-			rows << [path: servletContext.contextPath + pluginContextPath + '/js/metacore/' + name + '.js',
-			         type: 'script']
+		for (String file in JS) {
+			rows << [path: resource(dir: 'js/metacore', file: file + '.js', plugin: 'transmart-metacore-plugin'), type: 'script']
 		}
 
-		for (String name in CSS) {
-			rows << [path: servletContext.contextPath + pluginContextPath + '/css/' + name + '.css',
-			         type: 'stylesheet']
+		for (String file in CSS) {
+			rows << [path: resource(dir: 'css', file: file + '.css', plugin: 'transmart-fractalis'), type: 'css']
 		}
 
 		render([success: true, totalCount: rows.size(), files: rows] as JSON)
